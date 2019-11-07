@@ -17,6 +17,8 @@ class MapComponent extends Component {
     };
 
     componentDidMount() {
+        const map = new Map("a name")
+        console.log(map)
         window.addEventListener("resize", this.updateDimensions);
     }
 
@@ -36,9 +38,9 @@ class MapComponent extends Component {
         return (
             <React.Fragment>
                     <Map
-                     style={screenSize}
+                        style={screenSize}
                         class="full-screen-map"
-                        mapProperties={{ basemap: "streets" }}
+                        mapProperties={{ basemap: "oceans" }}
                         loaderOptions={{ css: true }}
                         //style={this.style.mapCss}
                         viewProperties={{
