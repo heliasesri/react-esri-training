@@ -33,8 +33,14 @@ class MapComponent extends Component {
 
     render() {
         const { screenWidth, screenHeight } = this.state;
-        const height = screenHeight * 0.999; //* 0.999 for no scroll to fit in the page
-        const width = screenWidth * 0.999;
+    /*     const height = screenHeight * 0.999; //* 0.999 for no scroll to fit in the page
+        const width = screenWidth * 0.999; */
+
+        //* 0.999 for no scroll to fit in the page
+        const width = "100%";
+        const height = "100%"; 
+        //const height = "(calc(100% – (64 px) ))"; 
+        
         const screenSize = { height, width };
 
         return (
