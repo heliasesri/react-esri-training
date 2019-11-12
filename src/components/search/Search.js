@@ -1,9 +1,14 @@
-import React, { Component } from "react";
+/* 
+    Doenst need to be a component 
+    need to change it in the future
 
+*/
+
+import React, { Component } from "react";
 import { loadModules } from "esri-loader";
 
-class SearchComponent extends Component {
 
+class SearchComponent extends Component {
     state = {
         search: undefined
     };
@@ -15,28 +20,20 @@ class SearchComponent extends Component {
                     view: this.props.view
                   });
 
-
                   this.props.view.ui.add(searchWidget,{
-                    position: "top-left",
+                    position: "top-right",
                     index: 2
                   })
-                //this.setState({search: searchWidget})
+                this.setState({search: searchWidget})
             })
             .catch(err => {
                 console.error(err);
             });
     }
 
-    updateDimensions = () => {};
-
-    render() {
-        const { search } = this.state;
-        const SearchIWantToCreate = search;
-     
+    render() {     
         return (
             <React.Fragment>
-                {this.state.search &&  console.log(search)}
-               
             </React.Fragment>
         );
     }
