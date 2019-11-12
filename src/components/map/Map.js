@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Map } from "@esri/react-arcgis";
 import CreateSearch from "../search/Search";
+import SelfMadeComponent from "../selfMadeComponent";
 
 class MapComponent extends Component {
     state = {
@@ -19,6 +20,13 @@ class MapComponent extends Component {
         });
     };
 
+    getScreenSize = () => {
+        const { screenWidth, screenHeight } = this.state;
+        const height = screenHeight * 0.999; //* 0.999 for no scroll to fit in the page
+        const width = screenWidth * 0.999;
+        return {height,width}
+    }
+
     getMapAndView = (map, view) => {
         this.setState({
             map: map,
@@ -31,11 +39,12 @@ class MapComponent extends Component {
         this.state.isUpdate && CreateSearch(this.state.view);
     };
 
+    generateMyComponent = () => {
+        //Ici je render mes components via un function
+    }
+
     render() {
-        const { screenWidth, screenHeight } = this.state;
-        const height = screenHeight * 0.999; //* 0.999 for no scroll to fit in the page
-        const width = screenWidth * 0.999;
-        const screenSize = { height, width };
+        const screenSize = this.getScreenSize()
 
         return (
             <React.Fragment>
