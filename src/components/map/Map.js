@@ -1,15 +1,8 @@
 import React, { Component } from "react";
 import { Map } from "@esri/react-arcgis";
 import SearchComponent from "../search/Search";
+import SelfMadeComponent from "../selfMadeComponent";
 
-
-/* const styles = {
-    mapCss: {
-        width: undefined,
-        height: undefined
-    },
-};
- */
 class MapComponent extends Component {
     state = {
         screenWidth: window.innerWidth,
@@ -27,15 +20,23 @@ class MapComponent extends Component {
         });
     };
 
-    getMapAndView = (map, view) => {
-         this.setState({ map: map, view: view });
-    };
-
-    render() {
+    getScreenSize = () => {
         const { screenWidth, screenHeight } = this.state;
         const height = screenHeight * 0.999; //* 0.999 for no scroll to fit in the page
         const width = screenWidth * 0.999;
-        const screenSize = { height, width };
+        return {height,width}
+    }
+
+    getMapAndView = (map, view) => {
+        this.setState({ map: map, view: view });
+    };
+
+    generateMyComponent = () => {
+        //Ici je render mes components via un function
+    }
+
+    render() {
+        const screenSize = this.getScreenSize()
 
         return (
             <React.Fragment>
@@ -51,7 +52,19 @@ class MapComponent extends Component {
                     }}
                     onLoad={this.getMapAndView}
                 />
-                {(this.state.view && this.state.map) && <SearchComponent view={this.state.view} map={this.state.map}/>}
+                {this.state.view && this.state.map ? (
+                    <React.Fragment>
+                        <SearchComponent
+                            view={this.state.view}
+                            map={this.state.map}
+                        />
+                        <SelfMadeComponent
+                            view={this.state.view}
+                            map={this.state.map}
+                        />
+                    </React.Fragment>
+                ) : null}
+                {/*    {(this.state.view && this.state.map) && <SearchComponent view={this.state.view} map={this.state.map}/>} */}
             </React.Fragment>
         );
     }

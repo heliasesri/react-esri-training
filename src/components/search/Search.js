@@ -22,7 +22,7 @@ class SearchComponent extends Component {
 
                   this.props.view.ui.add(searchWidget,{
                     position: "top-right",
-                    index: 2
+                    index: 0
                   })
                 this.setState({search: searchWidget})
             })
