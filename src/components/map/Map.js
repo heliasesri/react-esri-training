@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Map } from "@esri/react-arcgis";
-//import { Scene } from "@esri/react-arcgis";
-//import WebMap from "esri/WebMap"
+import SearchComponent from "../search/Search";
+
 
 /* const styles = {
     mapCss: {
         width: undefined,
         height: undefined
     },
-}; */
-
+};
+ */
 class MapComponent extends Component {
     state = {
         screenWidth: window.innerWidth,
@@ -17,8 +17,6 @@ class MapComponent extends Component {
     };
 
     componentDidMount() {
-        const map = new Map("a name")
-        console.log(map)
         window.addEventListener("resize", this.updateDimensions);
     }
 
@@ -29,25 +27,31 @@ class MapComponent extends Component {
         });
     };
 
+    getMapAndView = (map, view) => {
+         this.setState({ map: map, view: view });
+    };
+
     render() {
         const { screenWidth, screenHeight } = this.state;
-        const height = screenHeight;
-        const width = screenWidth;
+        const height = screenHeight * 0.999; //* 0.999 for no scroll to fit in the page
+        const width = screenWidth * 0.999;
         const screenSize = { height, width };
 
         return (
             <React.Fragment>
-                    <Map
-                        style={screenSize}
-                        class="full-screen-map"
-                        mapProperties={{ basemap: "oceans" }}
-                        loaderOptions={{ css: true }}
-                        //style={this.style.mapCss}
-                        viewProperties={{
-                            center: [16, 54],
-                            zoom: 10
-                        }}
-                    />
+                <Map
+                    style={screenSize}
+                    class="full-screen-map"
+                    mapProperties={{ basemap: "streets" }}
+                    loaderOptions={{ css: true }}
+                    //style={this.style.mapCss}
+                    viewProperties={{
+                        center: [16, 54],
+                        zoom: 10
+                    }}
+                    onLoad={this.getMapAndView}
+                />
+                {(this.state.view && this.state.map) && <SearchComponent view={this.state.view} map={this.state.map}/>}
             </React.Fragment>
         );
     }

@@ -1,26 +1,42 @@
 import React, { Component } from "react";
-import { Search } from "@esri/react-arcgis";
 
+import { loadModules } from "esri-loader";
 
 class SearchComponent extends Component {
 
-    componentDidMount() {
-    
-    }
-
-    updateDimensions = () => {
-
+    state = {
+        search: undefined
     };
 
-    render() {
-        const { screenWidth, screenHeight } = this.state;
-        const height = screenHeight;
-        const width = screenWidth;
-        const screenSize = { height, width };
+    componentDidMount() {
+        loadModules(["esri/widgets/Search"])
+            .then(([Search]) => {
+                var searchWidget = new Search({
+                    view: this.props.view
+                  });
 
+
+                  this.props.view.ui.add(searchWidget,{
+                    position: "top-left",
+                    index: 2
+                  })
+                //this.setState({search: searchWidget})
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    updateDimensions = () => {};
+
+    render() {
+        const { search } = this.state;
+        const SearchIWantToCreate = search;
+     
         return (
             <React.Fragment>
-                 
+                {this.state.search &&  console.log(search)}
+               
             </React.Fragment>
         );
     }
