@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Map } from "@esri/react-arcgis";
 import SearchComponent from "../search/Search";
-
+import FeatureLayer from "../featureLayer/FeatureLayer";
 
 /* const styles = {
     mapCss: {
@@ -28,7 +28,7 @@ class MapComponent extends Component {
     };
 
     getMapAndView = (map, view) => {
-         this.setState({ map: map, view: view });
+        this.setState({ map: map, view: view });
     };
 
     render() {
@@ -51,7 +51,18 @@ class MapComponent extends Component {
                     }}
                     onLoad={this.getMapAndView}
                 />
-                {(this.state.view && this.state.map) && <SearchComponent view={this.state.view} map={this.state.map}/>}
+                {this.state.view && this.state.map && (
+                    <React.Fragment>
+                        <SearchComponent
+                            view={this.state.view}
+                            map={this.state.map}
+                        />
+                        <FeatureLayer
+                            view={this.state.view}
+                            map={this.state.map}
+                        ></FeatureLayer>
+                    </React.Fragment>
+                )}
             </React.Fragment>
         );
     }
