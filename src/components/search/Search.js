@@ -1,42 +1,20 @@
-/* 
-    Doenst need to be a component 
-    need to change it in the future
-
-*/
-
-import React, { Component } from "react";
 import { loadModules } from "esri-loader";
 
-
-class SearchComponent extends Component {
-    state = {
-        search: undefined
-    };
-
-    componentDidMount() {
-        loadModules(["esri/widgets/Search"])
-            .then(([Search]) => {
-                var searchWidget = new Search({
-                    view: this.props.view
-                  });
-
-                  this.props.view.ui.add(searchWidget,{
-                    position: "top-right",
-                    index: 2
-                  })
-                this.setState({search: searchWidget})
-            })
-            .catch(err => {
-                console.error(err);
+const CreateSearch = view => {
+    loadModules(["esri/widgets/Search"])
+        .then(([Search]) => {
+            const searchWidget = new Search({
+                view: view
             });
-    }
 
-    render() {     
-        return (
-            <React.Fragment>
-            </React.Fragment>
-        );
-    }
-}
+            view.ui.add(searchWidget, {
+                position: "top-right",
+                index: 2
+            });
+        })
+        .catch(err => {
+            console.error(err);
+        });
+};
 
-export default SearchComponent;
+export default CreateSearch;

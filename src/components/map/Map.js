@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { Map } from "@esri/react-arcgis";
-import SearchComponent from "../search/Search";
+import CreateSearch from "../search/Search";
 
-
-/* const styles = {
-    mapCss: {
-        width: undefined,
-        height: undefined
-    },
-};
- */
 class MapComponent extends Component {
     state = {
         screenWidth: window.innerWidth,
@@ -28,7 +20,15 @@ class MapComponent extends Component {
     };
 
     getMapAndView = (map, view) => {
-         this.setState({ map: map, view: view });
+        this.setState({
+            map: map,
+            view: view,
+            isUpdate: true
+        });
+    };
+
+    loadComponents = () => {
+        this.state.isUpdate && CreateSearch(this.state.view);
     };
 
     render() {
@@ -44,14 +44,14 @@ class MapComponent extends Component {
                     class="full-screen-map"
                     mapProperties={{ basemap: "streets" }}
                     loaderOptions={{ css: true }}
-                    //style={this.style.mapCss}
                     viewProperties={{
                         center: [16, 54],
                         zoom: 10
                     }}
                     onLoad={this.getMapAndView}
                 />
-                {(this.state.view && this.state.map) && <SearchComponent view={this.state.view} map={this.state.map}/>}
+
+                {this.loadComponents()}
             </React.Fragment>
         );
     }
