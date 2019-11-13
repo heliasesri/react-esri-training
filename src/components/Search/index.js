@@ -1,15 +1,15 @@
-import { loadModules } from "esri-loader";
+import { loadModules } from 'esri-loader';
 
 const CreateSearch = view => {
-    loadModules(["esri/widgets/Search"])
+    loadModules(['esri/widgets/Search'])
         .then(([Search]) => {
             const searchWidget = new Search({
                 view: view
             });
 
             view.ui.add(searchWidget, {
-                position: "top-right",
-                index: 2
+                position: 'top-right',
+                index: 0
             });
         })
         .catch(err => {
