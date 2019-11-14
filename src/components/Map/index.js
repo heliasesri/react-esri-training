@@ -3,6 +3,7 @@ import { Map } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
 import ReactDOM from 'react-dom';
 import SimpelImageComponent from '../SimpelImage';
+import AddFeatureLayer from '../FeatureLayer';
 
 class MapComponent extends Component {
     state = {
@@ -44,9 +45,10 @@ class MapComponent extends Component {
     };
 
     loadComponents = () => {
-        const { view } = this.state;
+        const { view, map } = this.state;
         if (view) {
             CreateSearch(view);
+            AddFeatureLayer(map, '6996f03a1b364dbab4008d99380370ed');
 
             const emptyContainer = document.createElement('div');
             ReactDOM.render(SimpelImageComponent(), emptyContainer);
@@ -69,13 +71,20 @@ class MapComponent extends Component {
                     loaderOptions={{ css: true }}
                     viewProperties={{
                         center: [16, 54],
-                        zoom: 10
+                        zoom: 5
                     }}
                     onLoad={(map, mapView) => {
                         this.getMapAndView(map, mapView);
                         this.loadComponents();
                     }}
                 />
+                <button
+                
+        class="esri-component esri-widget--button esri-widget esri-interactive"
+        type="button"
+        id="switch-btn"
+        value="3D"
+      />
 
                 {this.state.showComponent ? (
                     <React.Fragment></React.Fragment>

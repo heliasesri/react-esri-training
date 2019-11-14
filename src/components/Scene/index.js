@@ -1,3 +1,4 @@
+// not supported in 2d => SceneLayer, IntegratedMeshLayer, and PointCloudLayer.
 import React, { Component } from 'react';
 import { Scene } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
