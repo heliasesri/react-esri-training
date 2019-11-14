@@ -1,14 +1,14 @@
 import React from 'react';
 //import logo from './logo.svg';
-import './App.css';
-import MapComponent from './components/Map/Map'
-
+import Router from './components/Router';
+import { createBrowserHistory } from 'history'
 
 function App() {
-  return (
-    <MapComponent/>
-
-  );
+    return (
+        <React.Fragment>
+            <Router history={createBrowserHistory()} />
+        </React.Fragment>
+    );
 }
 
 export default App;
