@@ -5,6 +5,7 @@ import CreateSearch from '../Search';
 import SimpelImageComponent from '../SimpelImage';
 import AddFeatureLayer from '../FeatureLayer';
 import { ReactElementToDomElement } from '../../handy/functions';
+import CreateTrack from '../Track';
 
 
 class MapComponent extends Component {
@@ -44,6 +45,7 @@ class MapComponent extends Component {
         const { view, map } = this.state;
         if (view) {
             CreateSearch(view);
+            CreateTrack(view);
             AddFeatureLayer(map, this.props.featureLayer);
 
             view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {

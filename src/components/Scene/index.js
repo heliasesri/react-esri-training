@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Scene } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
 import AddFeatureLayer from '../FeatureLayer';
+import CreateTrack from '../Track';
 
 import SimpelImageComponent from '../SimpelImage';
 import { ReactElementToDomElement } from '../../handy/functions';
@@ -42,6 +43,7 @@ class SceneComponent extends Component {
         const { view, map } = this.state;
         if (view) {
             CreateSearch(view);
+            CreateTrack(view);
             AddFeatureLayer(map, this.props.featureLayer);
 
             view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {
