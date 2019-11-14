@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import MapComponent from '../Map';
 import SceneComponent from '../Scene';
 import NotFoundPage from '../NotFoundPage';
+import ViewComponent from '../View';
 
 class Router extends Component {
     state = {
@@ -10,21 +11,21 @@ class Router extends Component {
         mode: undefined
     };
 
-/*     componentDidMount()
-    {
-        console.log(this.props.history.push())
-   
-    } */
-
     render() {
         return (
             <BrowserRouter>
                 <Switch>
                     <Route
                         exact
-                        path="(/|/map)"
+                        path="(/|/view|/home)"
+                        component={() => <ViewComponent />}
+                    />
+                    <Route
+                        exact
+                        path="(/map)"
                         component={() => <MapComponent />}
                     />
+
                     <Route
                         exact
                         path="/scene"

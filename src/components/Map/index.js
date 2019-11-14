@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
 import { Map } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
-import ReactDOM from 'react-dom';
+
 import SimpelImageComponent from '../SimpelImage';
 import AddFeatureLayer from '../FeatureLayer';
+import { ReactElementToDomElement } from '../../handy/functions';
+
 
 class MapComponent extends Component {
     state = {
         screenWidth: window.innerWidth,
-        screenHeight: window.innerHeight
+        screenHeight: window.innerHeight,
+        dimension: '2D'
     };
 
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions);
-
-        /*       this.props.view.ui.components = ["zoom", "compass"]; */
-        /* 
-                default view ui component
-                MapView: ["attribution", "zoom"]
-                SceneView: ["attribution", "navigation-toggle", "compass", "zoom"]  
-              */
     }
 
     updateDimensions = () => {
@@ -48,13 +44,16 @@ class MapComponent extends Component {
         const { view, map } = this.state;
         if (view) {
             CreateSearch(view);
-            AddFeatureLayer(map, '6996f03a1b364dbab4008d99380370ed');
+            AddFeatureLayer(map, this.props.featureLayer);
 
-            const emptyContainer = document.createElement('div');
-            ReactDOM.render(SimpelImageComponent(), emptyContainer);
-            view.ui.add(emptyContainer, {
+            view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {
                 position: 'top-right',
                 index: 1
+            });
+
+            view.ui.add(ReactElementToDomElement(this.props.switchComponent()), {
+                position: 'top-left',
+                index: 0
             });
         }
     };
@@ -69,26 +68,12 @@ class MapComponent extends Component {
                     class="full-screen-map"
                     mapProperties={{ basemap: 'streets' }}
                     loaderOptions={{ css: true }}
-                    viewProperties={{
-                        center: [16, 54],
-                        zoom: 5
-                    }}
+                    viewProperties={this.props.viewProperties}
                     onLoad={(map, mapView) => {
                         this.getMapAndView(map, mapView);
                         this.loadComponents();
                     }}
                 />
-                <button
-                
-        class="esri-component esri-widget--button esri-widget esri-interactive"
-        type="button"
-        id="switch-btn"
-        value="3D"
-      />
-
-                {this.state.showComponent ? (
-                    <React.Fragment></React.Fragment>
-                ) : null}
             </React.Fragment>
         );
     }

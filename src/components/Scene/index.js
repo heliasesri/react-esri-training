@@ -2,8 +2,10 @@
 import React, { Component } from 'react';
 import { Scene } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
-import ReactDOM from 'react-dom';
+import AddFeatureLayer from '../FeatureLayer';
+
 import SimpelImageComponent from '../SimpelImage';
+import { ReactElementToDomElement } from '../../handy/functions';
 
 class SceneComponent extends Component {
     state = {
@@ -37,16 +39,23 @@ class SceneComponent extends Component {
     };
 
     loadComponents = () => {
-        const { view } = this.state;
+        const { view, map } = this.state;
         if (view) {
             CreateSearch(view);
+            AddFeatureLayer(map, this.props.featureLayer);
 
-            const emptyContainer = document.createElement('div');
-            ReactDOM.render(SimpelImageComponent(), emptyContainer);
-            view.ui.add(emptyContainer, {
+            view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {
                 position: 'top-right',
                 index: 1
             });
+
+            view.ui.add(
+                ReactElementToDomElement(this.props.switchComponent()),
+                {
+                    position: 'top-left',
+                    index: 0
+                }
+            );
         }
     };
 
@@ -63,17 +72,12 @@ class SceneComponent extends Component {
                         ground: 'world-elevation'
                     }}
                     loaderOptions={{ css: true }}
-                    viewProperties={{
-                        zoom: 1
-                    }}
+                    viewProperties={this.props.viewProperties}
                     onLoad={(map, mapView) => {
                         this.getMapAndView(map, mapView);
                         this.loadComponents();
                     }}
                 />
-                {this.state.showComponent ? (
-                    <React.Fragment></React.Fragment>
-                ) : null}
             </React.Fragment>
         );
     }
