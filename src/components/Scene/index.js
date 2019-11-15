@@ -8,6 +8,7 @@ import CreateTrack from '../Track';
 import SimpelImageComponent from '../SimpelImage';
 import { ReactElementToDomElement } from '../../handy/functions';
 import OnViewChanges from '../ViewExtentChanges';
+import SaveMap from '../Save';
 
 class SceneComponent extends Component {
     state = {
@@ -52,6 +53,8 @@ class SceneComponent extends Component {
             CreateTrack(view);
             AddFeatureLayer(map, this.props.featureLayer);
 
+            var test = <SaveMap view={view} map={map} />
+
             view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {
                 position: 'top-right',
                 index: 1
@@ -62,6 +65,14 @@ class SceneComponent extends Component {
                 {
                     position: 'top-left',
                     index: 0
+                }
+            );
+
+            view.ui.add(
+                ReactElementToDomElement(test),
+                {
+                    position: 'top-right',
+                    
                 }
             );
         }

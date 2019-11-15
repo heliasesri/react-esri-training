@@ -10,6 +10,7 @@ import CreateTrack from '../Track';
 import PropTypes from 'prop-types';
 import OnViewChanges from '../ViewExtentChanges';
 import AddExpand from '../Expand';
+import SaveMap from '../Save';
 
 class MapComponent extends Component {
     static propTypes = {
@@ -28,7 +29,7 @@ class MapComponent extends Component {
         window.addEventListener('resize', this.updateDimensions);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
@@ -61,6 +62,10 @@ class MapComponent extends Component {
             CreateSearch(view);
             CreateTrack(view);
             AddExpand(view, ReactElementToDomElement(SimpelImageComponent()));
+            var test = <SaveMap view={view} map={map} />
+            console.log("ici")
+          
+            AddExpand(view, ReactElementToDomElement(test));
             AddFeatureLayer(map, this.props.featureLayer);
 
             view.ui.add(
@@ -70,6 +75,14 @@ class MapComponent extends Component {
                     index: 0
                 }
             );
+
+         /*    view.ui.add(
+                ReactElementToDomElement(test),
+                {
+                    position: 'top-right',
+                    
+                }
+            ); */
         }
     };
 
