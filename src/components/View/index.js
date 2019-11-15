@@ -3,6 +3,8 @@ import SwitchComponent from '../SwitchDimension';
 import MapComponent from '../Map';
 import SceneComponent from '../Scene';
 
+//import Grow from '@material-ui/core/Grow';
+
 class ViewComponent extends Component {
     state = {
         dimension: '2D',
@@ -14,9 +16,22 @@ class ViewComponent extends Component {
             center: [4.27583, 50.80474], //lon , lat
             zoom: 6
         }
+        /* check: true */
     };
 
     changeDimenion = () => {
+        /*     this.setState(prevState => ({
+            check: !prevState.check
+          }));
+
+      
+
+          setTimeout(function(){
+            this.setState(prevState => ({
+                check: !prevState.check
+              }));
+       }.bind(this),8000); */
+
         this.setState({
             dimension: this.state.dimension === '2D' ? '3D' : '2D'
         });
@@ -29,31 +44,23 @@ class ViewComponent extends Component {
         />
     );
 
-    updateStatevViaProps = (state, props) => {
-        this.setState({ [state]: props });
-    };
+    showComponent = MyComponent => (
+        <MyComponent
+            switchComponent={this.switch}
+            featureLayer={this.state.featureLayer}
+            viewProperties={this.state.viewProperties}
+        ></MyComponent>
+    );
 
     showView = () => {
         switch (this.state.dimension) {
             case '2D':
-                return (
-                    <MapComponent
-                        switchComponent={this.switch}
-                        featureLayer={this.state.featureLayer}
-                        viewProperties={this.state.viewProperties}
-                        updateStatevViaProps={this.updateStatevViaProps}
-                    />
-                );
+                return this.showComponent(MapComponent);
+
             case '3D':
-                return (
-                    <SceneComponent
-                        switchComponent={this.switch}
-                        featureLayer={this.state.featureLayer}
-                        viewProperties={this.state.viewProperties}
-                    />
-                );
+                return this.showComponent(SceneComponent);
             default:
-                return <div>We searching you map</div>;
+                return <div>Searching ...</div>;
         }
     };
 

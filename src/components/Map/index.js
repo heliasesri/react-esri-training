@@ -28,6 +28,10 @@ class MapComponent extends Component {
         window.addEventListener('resize', this.updateDimensions);
     }
 
+    componentWillUnmount(){
+        window.removeEventListener('resize', this.updateDimensions);
+    }
+
     updateDimensions = () => {
         this.setState({
             screenWidth: window.innerWidth,
