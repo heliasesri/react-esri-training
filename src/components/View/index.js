@@ -7,12 +7,12 @@ class ViewComponent extends Component {
     state = {
         dimension: '2D',
         featureLayer: [
-            '6996f03a1b364dbab4008d99380370ed',
-            'a79a3e4dc55343b08543b1b6133bfb90'
+            'a79a3e4dc55343b08543b1b6133bfb90',
+            '6996f03a1b364dbab4008d99380370ed' // order the layer
         ],
         viewProperties: {
-            center: [4.27583, 50.80474],
-            zoom: 5
+            center: [4.27583, 50.80474], //lon , lat
+            zoom: 6
         }
     };
 
@@ -29,6 +29,10 @@ class ViewComponent extends Component {
         />
     );
 
+    updateStatevViaProps = (state, props) => {
+        this.setState({ [state]: props });
+    };
+
     showView = () => {
         switch (this.state.dimension) {
             case '2D':
@@ -37,6 +41,7 @@ class ViewComponent extends Component {
                         switchComponent={this.switch}
                         featureLayer={this.state.featureLayer}
                         viewProperties={this.state.viewProperties}
+                        updateStatevViaProps={this.updateStatevViaProps}
                     />
                 );
             case '3D':
@@ -53,11 +58,7 @@ class ViewComponent extends Component {
     };
 
     render() {
-        return (
-            <React.Fragment>
-                {this.showView()}
-            </React.Fragment>
-        );
+        return <React.Fragment>{this.showView()}</React.Fragment>;
     }
 }
 

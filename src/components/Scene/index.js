@@ -7,6 +7,7 @@ import CreateTrack from '../Track';
 
 import SimpelImageComponent from '../SimpelImage';
 import { ReactElementToDomElement } from '../../handy/functions';
+import OnViewChanges from '../ViewExtentChanges';
 
 class SceneComponent extends Component {
     state = {
@@ -42,6 +43,7 @@ class SceneComponent extends Component {
     loadComponents = () => {
         const { view, map } = this.state;
         if (view) {
+            OnViewChanges(view, this.props.viewProperties)
             CreateSearch(view);
             CreateTrack(view);
             AddFeatureLayer(map, this.props.featureLayer);

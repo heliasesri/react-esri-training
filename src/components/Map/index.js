@@ -7,8 +7,17 @@ import AddFeatureLayer from '../FeatureLayer';
 import { ReactElementToDomElement } from '../../handy/functions';
 import CreateTrack from '../Track';
 
+import PropTypes from 'prop-types';
+import OnViewChanges from '../ViewExtentChanges';
+import AddExpand from '../Expand';
 
 class MapComponent extends Component {
+    static propTypes = {
+        featureLayer: PropTypes.array,
+        switchComponent: PropTypes.func.isRequired,
+        viewProperties: PropTypes.object.isRequired
+    };
+
     state = {
         screenWidth: window.innerWidth,
         screenHeight: window.innerHeight,
@@ -44,19 +53,19 @@ class MapComponent extends Component {
     loadComponents = () => {
         const { view, map } = this.state;
         if (view) {
+            OnViewChanges(view, this.props.viewProperties);
             CreateSearch(view);
             CreateTrack(view);
+            AddExpand(view, ReactElementToDomElement(SimpelImageComponent()));
             AddFeatureLayer(map, this.props.featureLayer);
 
-            view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {
-                position: 'top-right',
-                index: 1
-            });
-
-            view.ui.add(ReactElementToDomElement(this.props.switchComponent()), {
-                position: 'top-left',
-                index: 0
-            });
+            view.ui.add(
+                ReactElementToDomElement(this.props.switchComponent()),
+                {
+                    position: 'top-left',
+                    index: 0
+                }
+            );
         }
     };
 
