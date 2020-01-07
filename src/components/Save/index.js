@@ -53,7 +53,6 @@ class SaveMap extends Component {
             'esri/identity/IdentityManager'
         ])
             .then(([OAuthInfo, esriId]) => {
-                const { map, view } = this.props;
 
                 var info = new OAuthInfo({
                     // Swap this ID out with a registered application ID
