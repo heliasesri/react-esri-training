@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import OnViewChanges from '../ViewExtentChanges';
 import AddExpand from '../Expand';
 import SaveMap from '../Save';
+import ShapefileComponent from '../Shapefile';
+import CreateBaseMapGallery from '../BasemapGallery';
 
 class MapComponent extends Component {
     static propTypes = {
@@ -48,6 +50,7 @@ class MapComponent extends Component {
     };
 
     getMapAndView = (map, mapView) => {
+        mapView.popup = { defaultPopupTemplateEnabled: true };
         this.setState({
             map: map,
             view: mapView,
@@ -58,15 +61,20 @@ class MapComponent extends Component {
     loadComponents = () => {
         const { view, map } = this.state;
         if (view) {
+            view.ui.components = ([ "zoom","compass"]);
             OnViewChanges(view, this.props.viewProperties);
             CreateSearch(view);
             CreateTrack(view);
             AddExpand(view, ReactElementToDomElement(SimpelImageComponent()));
-            var test = <SaveMap view={view} map={map} />
-            console.log("ici")
-          
-            AddExpand(view, ReactElementToDomElement(test));
-            AddFeatureLayer(map, this.props.featureLayer);
+            
+            const shapeFileTest = <ShapefileComponent view={view} map={map} />;
+
+
+
+            let basemapGalleryPromises = CreateBaseMapGallery(view);
+            basemapGalleryPromises.then(function(result) {
+                AddExpand(view, result, 'esri-icon-basemap');
+            });
 
             view.ui.add(
                 ReactElementToDomElement(this.props.switchComponent()),
@@ -76,13 +84,11 @@ class MapComponent extends Component {
                 }
             );
 
-         /*    view.ui.add(
-                ReactElementToDomElement(test),
-                {
-                    position: 'top-right',
-                    
-                }
-            ); */
+            
+
+            view.ui.add(ReactElementToDomElement(shapeFileTest), {
+                position: 'top-right'
+            });
         }
     };
 
