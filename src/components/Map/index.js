@@ -64,10 +64,6 @@ class MapComponent extends Component {
             CreateTrack(view);
             AddExpand(view, ReactElementToDomElement(SimpelImageComponent()));
             
-            var test = <SaveMap view={view} map={map} />
-            console.log("ici")
-          
-            AddExpand(view, ReactElementToDomElement(test));
             AddFeatureLayer(map, this.props.featureLayer);
 
             view.ui.add(
