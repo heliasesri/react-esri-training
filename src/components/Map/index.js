@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map } from '@esri/react-arcgis';
+import { /* Map , */ WebMap } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
 
 import SimpelImageComponent from '../SimpelImage';
@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import OnViewChanges from '../ViewExtentChanges';
 import AddExpand from '../Expand';
 import SaveMap from '../Save';
+import SaveWebMapComponent from '../SaveWebMap';
 
 class MapComponent extends Component {
     static propTypes = {
@@ -62,6 +63,7 @@ class MapComponent extends Component {
             CreateSearch(view);
             CreateTrack(view);
             AddExpand(view, ReactElementToDomElement(SimpelImageComponent()));
+            
             var test = <SaveMap view={view} map={map} />
             console.log("ici")
           
@@ -76,8 +78,10 @@ class MapComponent extends Component {
                 }
             );
 
-         /*    view.ui.add(
-                ReactElementToDomElement(test),
+            const _SaveWebMapComponent = <SaveWebMapComponent history={this.props.history} view={view} map={map}/>
+            AddExpand(view, ReactElementToDomElement(_SaveWebMapComponent),"esri-icon-save");
+            /* view.ui.add(
+                ReactElementToDomElement(_SaveWebMapComponent),
                 {
                     position: 'top-right',
                     
@@ -91,7 +95,8 @@ class MapComponent extends Component {
 
         return (
             <React.Fragment>
-                <Map
+                <WebMap
+                    id="6ca0bacba6524ef6bb24ec6a56f51be9"
                     style={screenSize}
                     class="full-screen-map"
                     mapProperties={{ basemap: 'streets' }}

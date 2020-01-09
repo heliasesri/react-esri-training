@@ -16,9 +16,12 @@ class Router extends Component {
             <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <Switch>
                     <Route
+                        
                         exact
+                        
                         path="(/|/view|/home)"
-                        component={() => <ViewComponent />}
+                        component={() => <ViewComponent {...this.props}/>}
+                        
                     />
                     <Route
                         exact
