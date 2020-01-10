@@ -18,7 +18,7 @@ class Router extends Component {
                     <Route
                         exact
                         path="(/|/view|/home)"
-                        component={() => <ViewComponent />}
+                        component={() => <ViewComponent/>}
                     />
                     <Route
                         exact
