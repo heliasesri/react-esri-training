@@ -11,6 +11,8 @@ const AddFeatureLayer = (map, id) => {
                         }
                     });
 
+                    console.log(featureLayer)
+
                     map.add(featureLayer);
                 }
             })

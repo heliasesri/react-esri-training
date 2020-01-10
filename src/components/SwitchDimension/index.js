@@ -8,15 +8,6 @@ const styles = {
 };
 
 class SwitchComponent extends Component {
-    buttonRef = React.createRef();
-
-    componentDidMount() {
-        /* this.props.view.ui.add(this.buttonRef.current, {
-            position: 'top-left',
-            index: 1
-        }); */
-    }
-
     change = () => {
         if (!this.props.changeFunction)
             return console.log('This function is not configured');
@@ -32,7 +23,6 @@ class SwitchComponent extends Component {
                         id="switch-btn"
                         style={styles.switchButton}
                         className=" esri-widget--button esri-widget esri-interactive"
-                        ref={this.buttonRef}
                         onClick={() => {
                             this.change();
                         }}
