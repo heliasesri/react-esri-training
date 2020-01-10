@@ -32,7 +32,6 @@ class ViewComponent extends Component {
 
     showComponent = MyComponent => (
         <MyComponent
-            {...this.props}
             switchComponent={this.switch}
             featureLayer={this.state.featureLayer}
             viewProperties={this.state.viewProperties}
