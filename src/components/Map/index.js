@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { /* Map , */ WebMap } from '@esri/react-arcgis';
+import { WebMap } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
 
 import SimpelImageComponent from '../SimpelImage';
@@ -10,7 +10,6 @@ import CreateTrack from '../Track';
 import PropTypes from 'prop-types';
 import OnViewChanges from '../ViewExtentChanges';
 import AddExpand from '../Expand';
-import SaveMap from '../Save';
 import SaveWebMapComponent from '../SaveWebMap';
 
 class MapComponent extends Component {
@@ -63,7 +62,7 @@ class MapComponent extends Component {
             CreateSearch(view);
             CreateTrack(view);
             AddExpand(view, ReactElementToDomElement(SimpelImageComponent()));
-            
+
             AddFeatureLayer(map, this.props.featureLayer);
 
             view.ui.add(
@@ -74,15 +73,18 @@ class MapComponent extends Component {
                 }
             );
 
-            const _SaveWebMapComponent = <SaveWebMapComponent history={this.props.history} view={view} map={map}/>
-            AddExpand(view, ReactElementToDomElement(_SaveWebMapComponent),"esri-icon-save");
-            /* view.ui.add(
+            const _SaveWebMapComponent = (
+                <SaveWebMapComponent
+                    history={this.props.history}
+                    view={view}
+                    map={map}
+                />
+            );
+            AddExpand(
+                view,
                 ReactElementToDomElement(_SaveWebMapComponent),
-                {
-                    position: 'top-right',
-                    
-                }
-            ); */
+                'esri-icon-save'
+            );
         }
     };
 

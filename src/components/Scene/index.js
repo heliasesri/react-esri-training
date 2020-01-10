@@ -1,6 +1,6 @@
 // not supported in 2d => SceneLayer, IntegratedMeshLayer, and PointCloudLayer.
 import React, { Component } from 'react';
-import { Scene } from '@esri/react-arcgis';
+import { WebScene } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
 import AddFeatureLayer from '../FeatureLayer';
 import CreateTrack from '../Track';
@@ -8,7 +8,8 @@ import CreateTrack from '../Track';
 import SimpelImageComponent from '../SimpelImage';
 import { ReactElementToDomElement } from '../../handy/functions';
 import OnViewChanges from '../ViewExtentChanges';
-import SaveMap from '../Save';
+import AddExpand from '../Expand';
+import SaveWebMapComponent from '../SaveWebMap';
 
 class SceneComponent extends Component {
     state = {
@@ -20,7 +21,7 @@ class SceneComponent extends Component {
         window.addEventListener('resize', this.updateDimensions);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
@@ -48,12 +49,19 @@ class SceneComponent extends Component {
     loadComponents = () => {
         const { view, map } = this.state;
         if (view) {
-            OnViewChanges(view, this.props.viewProperties)
+            OnViewChanges(view, this.props.viewProperties);
             CreateSearch(view);
             CreateTrack(view);
             AddFeatureLayer(map, this.props.featureLayer);
 
-            var test = <SaveMap view={view} map={map} />
+            const _SaveWebMapComponent = (
+                <SaveWebMapComponent view={view} map={map} />
+            );
+            AddExpand(
+                view,
+                ReactElementToDomElement(_SaveWebMapComponent),
+                'esri-icon-save'
+            );
 
             view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {
                 position: 'top-right',
@@ -67,14 +75,6 @@ class SceneComponent extends Component {
                     index: 0
                 }
             );
-
-            view.ui.add(
-                ReactElementToDomElement(test),
-                {
-                    position: 'top-right',
-                    
-                }
-            );
         }
     };
 
@@ -83,7 +83,8 @@ class SceneComponent extends Component {
 
         return (
             <React.Fragment>
-                <Scene
+                <WebScene
+                    id="2b8ae801e0cc43f5a7b4b1f6f4d9b579"
                     style={screenSize}
                     class="full-screen-map"
                     mapProperties={{

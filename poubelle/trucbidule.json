@@ -1,42 +1,30 @@
 {
-    "operationalLayers": [
-        {
-            "id": "16f857fad5d-layer-0",
-            "title": "World Regions",
-            "url": "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Regions/FeatureServer/0",
-            "itemId": "a79a3e4dc55343b08543b1b6133bfb90",
-            "layerType": "ArcGISFeatureLayer"
-        },
-        {
-            "id": "16f857fad5d-layer-1",
-            "opacity": 0.8,
-            "title": "World Cities",
-            "url": "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Cities/FeatureServer/0",
-            "itemId": "6996f03a1b364dbab4008d99380370ed",
-            "layerType": "ArcGISFeatureLayer"
-        }
-    ],
+    "operationalLayers": [],
     "baseMap": {
         "baseMapLayers": [
             {
                 "id": "World_Hillshade_3689",
-                "title": "World Hillshade",
+                "layerType": "ArcGISTiledMapServiceLayer",
                 "url": "https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer",
-                "layerType": "ArcGISTiledMapServiceLayer"
+                "visibility": true,
+                "opacity": 1,
+                "title": "World Hillshade"
             },
             {
                 "id": "VectorTile_6451",
-                "title": "World Topographic Map",
-                "itemId": "7dc6cea0b1764a1f9af2e679f642f0f5",
+                "type": "VectorTileLayer",
                 "layerType": "VectorTileLayer",
-                "styleUrl": "https://cdn.arcgis.com/sharing/rest/content/items/7dc6cea0b1764a1f9af2e679f642f0f5/resources/styles/root.json"
+                "title": "World Topographic Map",
+                "styleUrl": "https://cdn.arcgis.com/sharing/rest/content/items/7dc6cea0b1764a1f9af2e679f642f0f5/resources/styles/root.json",
+                "itemId": "7dc6cea0b1764a1f9af2e679f642f0f5",
+                "visibility": true,
+                "opacity": 1
             }
         ],
         "title": "Topographic"
     },
-    "authoringApp": "ArcGIS API for JavaScript",
-    "authoringAppVersion": "4.13",
-    "spatialReference": { "latestWkid": 3857, "wkid": 102100 },
-    "version": "2.15"
+    "spatialReference": { "wkid": 102100, "latestWkid": 3857 },
+    "authoringApp": "WebMapViewer",
+    "authoringAppVersion": "7.4",
+    "version": "2.16"
 }
-
