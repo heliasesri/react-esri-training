@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/react-esri-training/static/css/main.498d002a.chunk.css",
+    "main.js": "/react-esri-training/static/js/main.99518426.chunk.js",
+    "main.js.map": "/react-esri-training/static/js/main.99518426.chunk.js.map",
+    "runtime-main.js": "/react-esri-training/static/js/runtime-main.6dfcafe0.js",
+    "runtime-main.js.map": "/react-esri-training/static/js/runtime-main.6dfcafe0.js.map",
+    "static/js/2.17f4c97f.chunk.js": "/react-esri-training/static/js/2.17f4c97f.chunk.js",
+    "static/js/2.17f4c97f.chunk.js.map": "/react-esri-training/static/js/2.17f4c97f.chunk.js.map",
+    "index.html": "/react-esri-training/index.html",
+    "precache-manifest.6b085db7173a7652c5559e5281db1ec1.js": "/react-esri-training/precache-manifest.6b085db7173a7652c5559e5281db1ec1.js",
+    "service-worker.js": "/react-esri-training/service-worker.js",
+    "static/css/main.498d002a.chunk.css.map": "/react-esri-training/static/css/main.498d002a.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6dfcafe0.js",
+    "static/js/2.17f4c97f.chunk.js",
+    "static/css/main.498d002a.chunk.css",
+    "static/js/main.99518426.chunk.js"
+  ]
+}
