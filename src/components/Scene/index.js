@@ -1,6 +1,6 @@
 // not supported in 2d => SceneLayer, IntegratedMeshLayer, and PointCloudLayer.
 import React, { Component } from 'react';
-import { Scene } from '@esri/react-arcgis';
+import { WebScene } from '@esri/react-arcgis';
 import CreateSearch from '../Search';
 import AddFeatureLayer from '../FeatureLayer';
 import CreateTrack from '../Track';
@@ -8,7 +8,10 @@ import CreateTrack from '../Track';
 import SimpelImageComponent from '../SimpelImage';
 import { ReactElementToDomElement } from '../../handy/functions';
 import OnViewChanges from '../ViewExtentChanges';
-import SaveMap from '../Save';
+import AddExpand from '../Expand';
+import ShapefileComponent from '../Shapefile';
+import CreateBaseMapGallery from '../BasemapGallery';
+import SaveWebMapComponent from '../SaveWebMap';
 
 class SceneComponent extends Component {
     state = {
@@ -20,7 +23,7 @@ class SceneComponent extends Component {
         window.addEventListener('resize', this.updateDimensions);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
@@ -30,6 +33,7 @@ class SceneComponent extends Component {
             screenHeight: window.innerHeight
         });
     };
+
     getScreenSize = () => {
         const { screenWidth, screenHeight } = this.state;
         const height = screenHeight * 0.999; //* 0.999 for no scroll to fit in the page
@@ -48,17 +52,19 @@ class SceneComponent extends Component {
     loadComponents = () => {
         const { view, map } = this.state;
         if (view) {
-            OnViewChanges(view, this.props.viewProperties)
+            OnViewChanges(view, this.props.viewProperties);
             CreateSearch(view);
             CreateTrack(view);
             AddFeatureLayer(map, this.props.featureLayer);
 
-            var test = <SaveMap view={view} map={map} />
+            AddExpand(view, ReactElementToDomElement(SimpelImageComponent()));
 
-            view.ui.add(ReactElementToDomElement(SimpelImageComponent()), {
-                position: 'top-right',
-                index: 1
+            let basemapGalleryPromises = CreateBaseMapGallery(view);
+            basemapGalleryPromises.then(function(result) {
+                AddExpand(view, result, 'esri-icon-basemap');
             });
+
+            
 
             view.ui.add(
                 ReactElementToDomElement(this.props.switchComponent()),
@@ -67,13 +73,26 @@ class SceneComponent extends Component {
                     index: 0
                 }
             );
+            const _ShapefileComponent = (
+                <ShapefileComponent view={view} map={map} />
+            );
+            AddExpand(
+                view,
+                ReactElementToDomElement(_ShapefileComponent),
+                'esri-icon-plus-circled'
+            );
 
-            view.ui.add(
-                ReactElementToDomElement(test),
-                {
-                    position: 'top-right',
-                    
-                }
+            const _SaveWebMapComponent = (
+                <SaveWebMapComponent
+                    history={this.props.history}
+                    view={view}
+                    map={map}
+                />
+            );
+            AddExpand(
+                view,
+                ReactElementToDomElement(_SaveWebMapComponent),
+                'esri-icon-save'
             );
         }
     };
@@ -83,7 +102,8 @@ class SceneComponent extends Component {
 
         return (
             <React.Fragment>
-                <Scene
+                <WebScene
+                    id="2b8ae801e0cc43f5a7b4b1f6f4d9b579"
                     style={screenSize}
                     class="full-screen-map"
                     mapProperties={{

@@ -1,0 +1,5 @@
+https://www.arcgis.com/sharing/rest/content/users/{username} = usercontent.url
+https://www.arcgis.com/sharing/rest/content/items/{id} = useritem.url
+https://<featureservice-url>/<layerId>
+
+https://services.arcgis.com/1WXsSdZFzziTTcic/arcgis/rest/admin/services/{name of service}/FeatureServer = https://<adminservicecatalog-url>/services/<serviceName>/FeatureServer/<layerId>/

@@ -1,0 +1,31 @@
+{
+    "_comment": "name is REQUIRED, initialExtent can be programmed",
+    "name": "", 
+    "serviceDescription": "",
+    "hasStaticData": false,
+    "maxRecordCount": 5000,
+    "supportedQueryFormats": "JSON",
+    "capabilities": "Create,Delete,Query,Update,Editing",
+    "description": "",
+    "copyrightText": "",
+    "spatialReference": {
+        "wkid": 102100
+    },
+    "initialExtent": {
+        "xmin": -20037507.0671618,
+        "ymin": -30240971.9583862,
+        "xmax": 20037507.0671618,
+        "ymax": 18398924.324645,
+        "spatialReference": {
+            "wkid": 102100,
+            "latestWkid": 3857
+        }
+    },
+    "allowGeometryUpdates": true,
+    "units": "esriMeters",
+    "xssPreventionInfo": {
+        "xssPreventionEnabled": true,
+        "xssPreventionRule": "input",
+        "xssInputRule": "rejectInvalid"
+    }
+}

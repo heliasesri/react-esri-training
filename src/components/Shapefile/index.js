@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
 import { loadModules } from 'esri-loader';
 
-import { Paper, Grid, Typography, Input, Button } from '@material-ui/core';
-
 const styles = {
-    Paper: {
-        padding: '1em'
+    sidebarDiv: {
+        width: '240px',
+        padding: '10px',
+        height: 'auto'
     },
-    Container: {
-        minWidth: '300px'
+    overlayDiv: {
+        zIndex: 1,
+        position: 'fixed',
+        margin: 'auto auto',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        width: '280px',
+        height: '180px',
+        padding: '10px',
+        backgroundColor: 'white',
+        border: '1px solid grey'
+    },
+    esriHeading: {
+        marginTop: 0
+    },
+    littleSpacing: {
+        marginBottom: '2em'
+    },
+    loading: {
+        color: 'white',
+        width: '18px',
+        height: '18px'
     }
 };
 
@@ -39,7 +61,7 @@ class ShapefileComponent extends Component {
         // Chrome and IE add c:\fakepath to the value - we need to remove it
         // see this link for more info: http://davidwalsh.name/fakepath
         name = name[0].replace('c:\\fakepath\\', '');
-        this.setState({ uploadStatus: `Loading - ${name}` });
+        this.setState({ uploadStatus: `Loading` });
 
         let params = {
             name: name,
@@ -71,11 +93,11 @@ class ShapefileComponent extends Component {
                     }
                 )
                     .then(response => {
-                        const layerName =
+                        /* const layerName =
                             response.data.featureCollection.layers[0]
-                                .layerDefinition.name;
+                                .layerDefinition.name; */
                         this.setState({
-                            uploadStatus: `Loaded - ${layerName}`
+                            uploadStatus: `Loaded`
                         });
 
                         this.addShapefileToMap(response.data.featureCollection);
@@ -102,25 +124,31 @@ class ShapefileComponent extends Component {
         ])
             .then(([FeatureLayer, Field, Graphic]) => {
                 let sourceGraphics = [];
-                const layers = featureCollection.layers.map(function(layer) {
+                
+                const layers = featureCollection.layers.map((layer) => {
                     const graphics = layer.featureSet.features.map(function(
                         feature
                     ) {
                         return Graphic.fromJSON(feature);
                     });
+
                     sourceGraphics = sourceGraphics.concat(graphics);
                     const featureLayer = new FeatureLayer({
                         //popupEnabled: false,
-                        objectIdField: 'FID',
+                        //objectIdField: 'FID',
+                        //url: "https://services.arcgis.com/1WXsSdZFzziTTcic/arcgis/rest/services/WebMapTrainingReactService/FeatureServer/dynamicLayer",
                         source: graphics,
+                        title: 'Feature information' /* {0} */,
                         fields: layer.layerDefinition.fields.map(function(
                             field
                         ) {
                             return Field.fromJSON(field);
                         })
                     });
+                    this.props.addShapeFile(featureLayer);
                     return featureLayer;
                 });
+
                 map.addMany(layers);
                 view.goTo(sourceGraphics);
 
@@ -134,45 +162,30 @@ class ShapefileComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                <Paper style={styles.Paper}>
-                    <form
-                        method="post"
-                        id="uploadForm"
-                        ref={elem => (this.form = elem)}
-                    >
-                        <Grid
-                            style={
-                                styles.Container
-                            } /* container spacing={1} alignItems="flex-start" */
-                        >
-                            <Grid item xs={12}>
-                                <Typography variant="h5">
-                                    Add ShapeFile
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    component="label"
-                                >
-                                    Upload Shapefile
-                                    <Input
-                                        type="file"
-                                        name="file"
-                                        id="inFile"
-                                        style={{ display: 'none' }}
-                                    />
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography gutterBottom>
-                                    Status: {this.state.uploadStatus}
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </Paper>
+                <form
+                    method="post"
+                    id="uploadForm"
+                    ref={elem => (this.form = elem)}
+                    style={styles.sidebarDiv}
+                    className="esri-widget"
+                >
+                    <h4 style={styles.esriHeading} className="esri-heading">
+                        Add ShapeFile
+                    </h4>
+                    <label htmlFor="inFile">
+                        <span type="button" className="esri-button">
+                            Upload Shapefile
+                        </span>
+                        <input
+                            type="file"
+                            name="file"
+                            id="inFile"
+                            style={{ display: 'none' }}
+                        />
+                    </label>
+                    <br />
+                    <div>Status: {this.state.uploadStatus}</div>
+                </form>
             </React.Fragment>
         );
     }

@@ -7,8 +7,9 @@ class ViewComponent extends Component {
     state = {
         dimension: '2D',
         featureLayer: [
-            'a79a3e4dc55343b08543b1b6133bfb90',
-            '6996f03a1b364dbab4008d99380370ed' // order the layer
+            /* 'a79a3e4dc55343b08543b1b6133bfb90', 
+             '6996f03a1b364dbab4008d99380370ed'  */
+            // order the layer
         ],
         viewProperties: {
             center: [4.27583, 50.80474], //lon , lat

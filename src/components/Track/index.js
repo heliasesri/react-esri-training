@@ -3,11 +3,11 @@ import { loadModules } from 'esri-loader';
 const CreateTrack = view => {
     loadModules(["esri/widgets/Track"])
         .then(([Track]) => {
-            const trackhWidget = new Track({
+            const trackWidget = new Track({
                 view: view
             });
 
-            view.ui.add(trackhWidget, {
+            view.ui.add(trackWidget, {
                 position: 'top-left'
             });
         })
